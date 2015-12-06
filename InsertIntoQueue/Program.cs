@@ -22,7 +22,7 @@ namespace InsertIntoQueue
             var queueClient = storageAccount.CreateCloudQueueClient();
             var queue = queueClient.GetQueueReference("tweetlyst");
             queue.CreateIfNotExists();
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 100; i++)
             {
                 AddToQueue();
             }
