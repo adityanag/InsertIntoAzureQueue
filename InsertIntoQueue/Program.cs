@@ -33,7 +33,7 @@ namespace InsertIntoQueue
             // create TaaS ticket request
             var tweetQueueEntry = new TweetQueueSetter()
             {
-                PartitionKey = "1",
+                PartitionKey = "This is new Partition Key, Dumbass",
                 UserId = "A",
                 RowKey ="B",
                 AccessKey ="Akey",
