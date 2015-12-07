@@ -13,32 +13,40 @@ namespace InsertIntoQueue
 {
     class Program
     {
-       
+        static string _queueName = "starttweetstream";
 
         static void Main(string[] args)
         {
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
             var queueClient = storageAccount.CreateCloudQueueClient();
-            var queue = queueClient.GetQueueReference("tweetlyst");
+            var queue = queueClient.GetQueueReference(_queueName);
             queue.CreateIfNotExists();
-            for (int i = 0; i <= 100; i++)
-            {
+           // for (int i = 0; i <= 5; i++) no need for loop - just insert one message at a time.
+            
                 AddToQueue();
-            }
+            
         }
 
         static  void AddToQueue()
         {
-            // create TaaS ticket request
+            string tableName;
+            string searchTerm;
+            Console.Write("Enter table name: ");
+            tableName= Console.ReadLine();
+            Console.Write("Enter Search Term: ");
+           searchTerm = Console.ReadLine();
+
+
             var tweetQueueEntry = new TweetQueueSetter()
             {
-                PartitionKey = "This is new Partition Key, Dumbass",
-                UserId = "A",
+                TableName =tableName,
+                PartitionKey = "A",
+                UserId = "userId",
                 RowKey ="B",
                 AccessKey ="Akey",
                 AccessToken = "Atoken",
-                SearchTerms ="terms",
+                SearchTerm =searchTerm,
                 ControlAction = "start",
                 Time = DateTime.Now
             };
@@ -49,11 +57,12 @@ namespace InsertIntoQueue
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
             var queueClient = storageAccount.CreateCloudQueueClient();
-            var queue = queueClient.GetQueueReference("tweetlyst");
+            var queue = queueClient.GetQueueReference(_queueName);
 
             // send message to queue
             var message = new CloudQueueMessage(ticketJson);
-             queue.AddMessageAsync(message);
+             queue.AddMessage(message);
+            Console.WriteLine("Added to queue");
         }
     }
 }
