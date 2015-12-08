@@ -32,20 +32,28 @@ namespace InsertIntoQueue
         {
             string tableName;
             string searchTerm;
+            string AccessToken;
+            string AccessTokenSecret;
             Console.Write("Enter table name: ");
             tableName= Console.ReadLine();
             Console.Write("Enter Search Term: ");
            searchTerm = Console.ReadLine();
+            Console.Write("Paste Access Token: ");
+            AccessToken = Console.ReadLine();
+            Console.Write("Paste Access Token Secret: ");
+            AccessTokenSecret = Console.ReadLine();
+
 
 
             var tweetQueueEntry = new TweetQueueSetter()
             {
                 TableName =tableName,
-                PartitionKey = "A",
+                PartitionKey = searchTerm,
                 UserId = "userId",
                 RowKey ="B",
-                AccessKey ="Akey",
-                AccessToken = "Atoken",
+               
+                AccessToken = AccessToken,
+                AccessTokenSecret = AccessTokenSecret,
                 SearchTerm =searchTerm,
                 ControlAction = "start",
                 Time = DateTime.Now
